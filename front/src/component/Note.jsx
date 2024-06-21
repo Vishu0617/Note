@@ -1,7 +1,7 @@
 import { Eye, Pencil, Pin, Trash2 } from "lucide-react"
-import { formatDate } from "../component/functions"
+import { formatDate } from "./functions"
 
-function Notes({ note, togglePin, view, edit, confirmDelete }) {
+function Note({ note, togglePin, view, edit, confirmDelete }) {
     return (<>
         <div className="w-full max-w-full h-64 flex flex-col justify-between hover:shadow-lg bg-gray-100 rounded-lg border-2 border-gray-300 mb-6 py-3 px-4">
             <div className="absolute top-0 right-0 m-2 ">
@@ -53,4 +53,4 @@ function Notes({ note, togglePin, view, edit, confirmDelete }) {
     </>)
 }
 
-export default Notes
+export default Note

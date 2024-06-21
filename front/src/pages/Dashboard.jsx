@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import searching from "../assets/searchingfinle.jpg";
-import Notes from "../component/Notes";
+import Note from "../component/Note";
 import NoteModel from "../model/NoteModal";
 import NoteViewModel from "../model/NoteViewModal.jsx";
 import axiosUrl from "../utils/axiosUrl";
@@ -178,7 +178,7 @@ function Dashboard() {
                         <div className="grid grid-row-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3">
                             {filteredNotes.map((note) => (
                                 <div className="rounded group relative" key={note.id}>
-                                    <Notes note={note} togglePin={togglePin} view={view} edit={edit} confirmDelete={confirmDelete} />
+                                    <Note note={note} togglePin={togglePin} view={view} edit={edit} confirmDelete={confirmDelete} />
                                 </div>
                             ))}
                         </div>
