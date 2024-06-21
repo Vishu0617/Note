@@ -173,6 +173,8 @@ Follow these steps to clone the project and set it up on your local machine:
    - ``zod`` :
         A TypeScript-first schema declaration and validation library, ensuring data integrity through runtime validation
 
+   - ``nodemon`` : Nodemon is tool that helps in development by automatically restarting the Node.js application when file changes are detected. This is useful for a smoother development workflow without needing to manually restart the server
+   
 ## Frontend Impliment
   - This is the overview of my ``Notes Project``.Explain it below.
 
