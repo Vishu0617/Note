@@ -10,12 +10,6 @@ Follow these steps to clone the project and set it up on your local machine:
 
   - After cloning the project, open it in your preferred code editor.
 - `Install Dependencies:`
-
-  - Add script in package.json
-    ```
-     "dev": "nodemon index.js",
-     "start": "node index.js"
-    ```
     
   - Navigate to the `Front` and `Server` directories and install the necessary packages:
 
@@ -76,7 +70,7 @@ Follow these steps to clone the project and set it up on your local machine:
 - ``Front`` :
   Using ``React`` i have manage ``Dynamic`` and responsive user interface. User can perform a ``Login``, ``Registration``, and ``CRUD ``opration for notes.
 
-- ``CSS Framework :-`` I am using ``Tailwind CSS `` for styling my frontend to maik it atractive..
+- ``CSS Framework `` : I am using ``Tailwind CSS `` for styling my frontend to maik it atractive..
 
 - ``Icons`` :
   ``Lucide-react icons`` used for various ``UI`` elements.A collection of icons optimized for React, making it easy to include scalable vector icons in your project.
@@ -174,6 +168,12 @@ Follow these steps to clone the project and set it up on your local machine:
         A TypeScript-first schema declaration and validation library, ensuring data integrity through runtime validation
 
    - ``nodemon`` : Nodemon is tool that helps in development by automatically restarting the Node.js application when file changes are detected. This is useful for a smoother development workflow without needing to manually restart the server
+   
+   - Whene used nodemon then add script in package.json
+      ```
+      "dev": "nodemon index.js",
+      "start": "node index.js"
+      ```
    
 ## Frontend Impliment
   - This is the overview of my ``Notes Project``.Explain it below.
