@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import userAuthentication from "../utils/userAuth";
-import { capitalFirstLater, formatDateAndTime } from "../component/functions"
+import { capitalFirstLater, formatDateAndTime } from "../utils/functions/functions"
 
 function ProfileModal({ profileView, closeVieMoal }) {
 

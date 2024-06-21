@@ -28,8 +28,8 @@ function NoteViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeViewM
                     <X className="h-5 w-5" />
                 </button>
                 <div className="mt-4">
-                    <h4 className="dark:text-black font-bold mb-3 text-lg sm:text-xl">{viewNotes?.title || "No titles available"}</h4>
-                    <p className="dark:text-black text-sm sm:text-base truncate-name">{viewNotes?.content }</p>
+                    <h4 className="dark:text-black font-bold mb-3 text-lg sm:text-xl">{viewNotes?.title}</h4>
+                    <p className="dark:text-black text-sm sm:text-base truncate-name">{viewNotes?.content}</p>
                 </div>
                 <div className="flex justify-between items-center mt-4">
                     <div>
@@ -47,7 +47,7 @@ function NoteViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeViewM
                         <button
                             title="Delete"
                             onClick={removedView}
-                            className="w-8 h-8 rounded-full hover:bg-red-500 hover:text-white bg-gray-800 dark:bg-gray-400 text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                            className="w-8 h-8 rounded-full bg-red-500 hover:text-white text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                             aria-label="delete note"
                         >
                             <Trash2 className="h-5 w-5" />

@@ -5,9 +5,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { signingValidation } from "../../utils/Validation";
 import axiosUrl from "../../utils/axiosUrl";
-import { showErrorInfo, handleUnknownError, handleServerNetworkError, showSuccessInfo, signInHandleZodError } from "../../utils/functions/errors.js";
+import { showErrorInfo, handleUnknownError, handleNetworkError, showSuccessInfo, signInHandleZodError } from "../../utils/functions/errors.js";
 import userAuthentication from "../../utils/userAuth";
-import { encryptUserData } from "../../component/functions.jsx";
+import { encryptUserData } from "../../utils/functions/functions";
 const secret_key = import.meta.env.VITE_SECRET_KEY
 
 function Signin() {
@@ -87,7 +87,7 @@ function Signin() {
         setValidationErrors(errors);
         setButtonLoader(false);
       } else if (!error.response) {
-        handleServerNetworkError()
+        handleNetworkError()
       } else
         handleUnknownError(error)
     }
@@ -146,13 +146,13 @@ function Signin() {
                   ? "border-red-500"
                   : "border-gray-300"
                   }`}
-                style={{ height: "40px" }} // Set a fixed height for the input element
+                style={{ height: "40px" }}
               />
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                style={{ top: "50%", transform: "translateY(-50%)" }} // Center the button vertically
+                style={{ top: "50%", transform: "translateY(-50%)" }}
               >
                 {isPasswordVisible ? (
                   <EyeOff className="h-5 w-5 text-gray-500" />

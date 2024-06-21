@@ -66,7 +66,7 @@ export const notesHandleZodError = (error, titleRef, contentRef) => {
   return errors;
 };
 
-export const handleServerNetworkError = () => {
+export const handleNetworkError = () => {
   Swal.fire({
     position: "center",
     icon: "error",

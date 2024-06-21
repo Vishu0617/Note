@@ -7,8 +7,8 @@ import NoteViewModel from "../model/NoteViewModal.jsx";
 import axiosUrl from "../utils/axiosUrl";
 import Confirmation from "../component/Confirmation";
 import SearchBar from "../component/Searchbar"
-import Loader from "../component/Loader" 
-import { handleServerNetworkError, handleUnknownError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
+import Loader from "../component/Loader"
+import { handleNetworkError, handleUnknownError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
 
 function Dashboard() {
     const [notes, setNotes] = useState([]);
@@ -22,6 +22,7 @@ function Dashboard() {
     const [editNotes, setEditNotes] = useState({});
     const [deleteNote, setDeleteNote] = useState(null);
     const [showConfirmation, setShowConfirmation] = useState(false);
+
     const apiCalled = useRef(false);
 
     const openModal = () => setIsModalOpen(true);
@@ -49,7 +50,7 @@ function Dashboard() {
             if (error.response && error.response.data) {
                 handleUnknownError(error)
             } else if (!error.response) {
-                handleServerNetworkError()
+                handleNetworkError()
             } else console.log("~ Catch Error :-", error);
         });
     };
@@ -71,7 +72,7 @@ function Dashboard() {
         return matchesSearchQuery && matchesFilter;
     });
 
-    const onSuccess = (note) => {
+    const onCreateSuccess = (note) => {
         const newNote = {
             ...note,
             pinned: note.pinned ?? false,
@@ -79,7 +80,7 @@ function Dashboard() {
         setNotes(prevNotes => [newNote, ...prevNotes]);
     };
 
-    const onDelteSuccess = (note) => {
+    const onDeleteSuccess = (note) => {
         const newNotesList = notes.filter((n) => n.id !== note.id);
         setNotes(newNotesList);
     };
@@ -115,7 +116,7 @@ function Dashboard() {
             await axiosUrl.delete(`/note/${deleteNote.id}`).then((res) => {
                 if (res.data.status === 1) {
                     showSuccessInfo(res)
-                    onDelteSuccess(deleteNote);
+                    onDeleteSuccess(deleteNote);
                     setShowConfirmation(false);
                     setDeleteNote(null);
                 } else {
@@ -126,7 +127,7 @@ function Dashboard() {
                 setIsLoading(false);
 
                 if (!error.response) {
-                    handleServerNetworkError()
+                    handleNetworkError()
                 } else
                     handleUnknownError(error)
             });
@@ -151,7 +152,7 @@ function Dashboard() {
         } catch (error) {
             console.error("Error updating note pin status:", error);
             if (!error.response) {
-                handleServerNetworkError()
+                handleNetworkError()
             } else
                 handleUnknownError(error)
         }
@@ -187,13 +188,33 @@ function Dashboard() {
                 ) : (
                     <div className="flex flex-col items-center justify-center h-full p-2 md:p-8 lg:p-16 text-center border-opacity-60">
                         <img src={searching} alt="Searching" className="w-48 max-w-xs md:max-w-sm lg:max-w-md mb-" />
-                        <p className="text-red-500 text-lg mb-32 md:text-xl">Oops, sorry, your data was not found.</p>
+                        <p className="text-red-500 text-lg mb-32 md:text-xl">No notes found.</p>
                     </div>
                 )}
             </div>
-            <NoteModel isOpen={isModalOpen} onClose={closeModal} onSuccess={onSuccess} />
-            <NoteViewModel edit={edit} confirmDelete={confirmDelete} viewNotes={viewNotes} isViewModel={isViewModel} closeViewModal={closeViewModal} />
-            <NoteModel editNotes={editNotes} isEditModal={isEditModal} onClose={closeEditModal} onSuccess={onSuccess} onEditSuccess={onEditSuccess} />
+
+            <NoteModel
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onCreateSuccess={onCreateSuccess}
+            />
+
+            <NoteViewModel
+                edit={edit}
+                confirmDelete={confirmDelete}
+                viewNotes={viewNotes}
+                isViewModel={isViewModel}
+                closeViewModal={closeViewModal}
+            />
+
+            <NoteModel
+                editNotes={editNotes}
+                isEditModal={isEditModal}
+                onClose={closeEditModal}
+                onCreateSuccess={onCreateSuccess}
+                onEditSuccess={onEditSuccess}
+            />
+
             {showConfirmation && (
                 <Confirmation
                     message="Are you sure you want to delete this note?"

@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import ProfileModel from '../model/ProfileModal';
 import axiosUrl from '../utils/axiosUrl';
 import Confirmation from '../component/Confirmation.jsx'
-import { formatName } from '../component/functions';
+import { formatName } from '../utils/functions/functions';
 import userAuthentication from '../utils/userAuth';
 import { showErrorInfo, showSuccessInfo } from '../utils/functions/errors.js';
 

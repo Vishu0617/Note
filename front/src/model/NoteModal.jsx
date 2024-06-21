@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { noteValidation } from "../utils/Validation.js";
 import axiosUrl from "../utils/axiosUrl.js";
-import { handleServerNetworkError, handleUnknownError, notesHandleZodError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
+import { handleNetworkError, handleUnknownError, notesHandleZodError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
 
-function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEditSuccess }) {
+function NotesModal({ editNotes, isOpen, onClose, isEditModal, onCreateSuccess, onEditSuccess }) {
     const [note, setNote] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
     const [buttonLoader, setButtonLoader] = useState(false);
@@ -42,7 +42,7 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
                 const errors = notesHandleZodError(error, titleRef, contentRef)
                 setValidationErrors(errors);
             } else if (!error.response) {
-                handleServerNetworkError()
+                handleNetworkError()
             } else {
                 handleUnknownError(error)
             }
@@ -55,7 +55,7 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
             showSuccessInfo(response);
             setNote({});
             onClose();
-            onSuccess(response.data.result[0]);
+            onCreateSuccess(response.data.result[0]);
         } else {
             showErrorInfo(response);
         }
@@ -122,9 +122,8 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
                     <div className="flex justify-end mt-12">
                         <button
                             type="button"
-                            // disabled={buttonLoader ? true : false}
                             onClick={closeModal}
-                            className="bg-slate-400 hover:bg-red-400 text-white px-4 py-2 rounded-md mr-2"
+                            className="bg-red-400 text-white px-4 py-2 rounded-md mr-2"
                         >
                             <span className="flex space-x-2">
                                 Cancel
@@ -134,7 +133,7 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
                             type="submit"
                             onClick={inputSubmit}
                             disabled={buttonLoader ? true : false}
-                            className="bg-slate-400 hover:bg-blue-400 text-white px-4 py-2 rounded-md"
+                            className="bg-blue-400 text-white px-4 py-2 rounded-md"
                         >
                             <span className="flex space-x-2">
                                 {buttonLoader ? "Loading..." : (editNotes ? "Update Note" : "Add Note")}
