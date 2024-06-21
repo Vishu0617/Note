@@ -1,5 +1,5 @@
 import { Eye, Pencil, Pin, Trash2 } from "lucide-react"
-import { Dateformater } from "../utils/functions/functions"
+import { formatDate } from "../component/functions"
 
 function Notes({ note, togglePin, view, edit, confirmDelete }) {
     return (<>
@@ -16,11 +16,11 @@ function Notes({ note, togglePin, view, edit, confirmDelete }) {
             </div>
             <div className="justify-between items-center">
                 <h4 className="dark:text-black font-bold mb-3">{note.title || "No titles available"}</h4>
-                <p className="dark:text-black text-sm truncate-name">{note.content || "No content available"}</p>
+                <p className="dark:text-black text-sm truncate-name">{note.content }</p>
             </div>
             <div className="flex justify-between items-center">
                 <div className="items-center justify-between dark:text-black">
-                    <p className="text-sm">{Dateformater(note.created_at) || "No date available"}</p>
+                    <p className="text-sm">{formatDate(note.created_at) || "No date available"}</p>
                 </div>
                 <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <button

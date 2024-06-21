@@ -75,16 +75,17 @@ export const handleServerNetworkError = () => {
   });
 };
 
-export const handleOtherError = (error) => {
+export const handleUnknownError = (error) => {
   Swal.fire({
     position: "center",
     icon: "error",
-    title: error?.response?.data?.message || "An error occurred. Please try again.",
+    title:
+      error?.response?.data?.message || "An error occurred. Please try again.",
     showConfirmButton: true,
   });
 };
 
-export const handleSuccess = (res) => {
+export const showSuccessInfo = (res) => {
   Swal.fire({
     position: "center",
     icon: "success",
@@ -93,7 +94,7 @@ export const handleSuccess = (res) => {
   });
 };
 
-export const handleInfo = (res) => {
+export const showErrorInfo = (res) => {
   Swal.fire({
     position: "center",
     icon: "info",

@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import Swal from "sweetalert2";
 import { z } from "zod";
-import { noteValidation } from "../utils/Validation";
-import axiosUrl from "../utils/axiosUrl";
-import { handleOtherError, handleServerNetworkError, notesHandleZodError } from "../utils/functions/Errors";
+import { noteValidation } from "../utils/Validation.js";
+import axiosUrl from "../utils/axiosUrl.js";
+import { handleServerNetworkError, handleUnknownError, notesHandleZodError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
 
 function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEditSuccess }) {
-    // console.log("~ editNotes :-",editNotes);
-    const [notes, setNotes] = useState({});
+    const [note, setNote] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
     const [buttonLoader, setButtonLoader] = useState(false);
 
@@ -16,70 +14,27 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
 
     useEffect(() => {
         if (editNotes) {
-            setNotes(editNotes);
+            setNote(editNotes);
         } else {
-            setNotes({});
+            setNote({});
         }
     }, [editNotes]);
 
     const inputChange = (e) => {
-        setNotes({ ...notes, [e.target.name]: e.target.value });
+        setNote({ ...note, [e.target.name]: e.target.value });
         setValidationErrors((prev) => ({ ...prev, [e.target.name]: "" }));
     };
 
     const inputSubmit = async (e) => {
         e.preventDefault();
         try {
-            noteValidation.parse(notes);
+            noteValidation.parse(note);
             setValidationErrors({});
             setButtonLoader(true)
             if (!editNotes) {
-                await axiosUrl.post('/note', notes).then((res) => {
-                    if (res.data.message) {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: res.data.message,
-                            showConfirmButton: true,
-                        });
-                        setButtonLoader(false)
-                        setNotes({})
-                        onClose();
-                        onSuccess(res.data.result[0])
-
-                    } else {
-                        Swal.fire({
-                            position: "center",
-                            icon: "info",
-                            title: res.data.message,
-                            showConfirmButton: true,
-                        });
-                        setButtonLoader(false)
-                    }
-                })
+                handleAddNote()
             } else {
-                await axiosUrl.patch(`/note/${editNotes?.id}`, notes).then((res) => {
-                    if (res.data.message) {
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
-                            title: res.data.message,
-                            showConfirmButton: true,
-                        });
-                        setButtonLoader(false)
-                        setNotes({})
-                        onClose();
-                        onEditSuccess(res.data.result[0])
-                    } else {
-                        Swal.fire({
-                            position: "center",
-                            icon: "info",
-                            title: res.data.message,
-                            showConfirmButton: true,
-                        });
-                        setButtonLoader(false)
-                    }
-                })
+                handleUpdateNote()
             }
         } catch (error) {
             setButtonLoader(false)
@@ -89,15 +44,43 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
             } else if (!error.response) {
                 handleServerNetworkError()
             } else {
-                handleOtherError(error)
+                handleUnknownError(error)
             }
         }
+    };
+
+    const handleAddNote = async () => {
+        const response = await axiosUrl.post('/note', note);
+        if (response.data.message) {
+            showSuccessInfo(response);
+            setNote({});
+            onClose();
+            onSuccess(response.data.result[0]);
+        } else {
+            showErrorInfo(response);
+        }
+        setButtonLoader(false)
+    };
+
+    const handleUpdateNote = async () => {
+        const response = await axiosUrl.patch(`/note/${editNotes?.id}`, note);
+        if (response.data.message) {
+            showSuccessInfo(response);
+            setNote({});
+            onClose();
+            onEditSuccess(response.data.result[0]);
+        } else {
+            showErrorInfo(response);
+
+        }
+        setButtonLoader(false)
+
     };
 
     const closeModal = () => {
         onClose();
         setValidationErrors({});
-        setNotes({});
+        setNote({});
     };
 
     const isVisible = editNotes ? isEditModal : isOpen;
@@ -116,7 +99,7 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
                             name="title"
                             placeholder="Notes title"
                             ref={titleRef}
-                            value={notes.title || ""}
+                            value={note.title || ""}
                             onChange={inputChange}
                             className={`mt-1 block w-full px-3 py-2 border ${validationErrors.title ? "border-red-500" : "border-gray-300"
                                 } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 sm:text-sm`}
@@ -129,7 +112,7 @@ function NotesModal({ editNotes, isOpen, onClose, isEditModal, onSuccess, onEdit
                             name="content"
                             placeholder="Note content"
                             ref={contentRef}
-                            value={notes.content || ""}
+                            value={note.content || ""}
                             onChange={inputChange}
                             className={`mt-1 block w-full h-32 px-3 py-2 border ${validationErrors.content ? "border-red-500" : "border-gray-300"
                                 } rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 sm:text-sm`}

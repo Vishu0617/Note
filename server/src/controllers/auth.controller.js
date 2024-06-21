@@ -35,6 +35,7 @@ export const registration = async (req, res) => {
         .json({ status: 2, message: error.message });
     }
 
+
     if (
       data.user &&
       data.user.identities &&
@@ -105,7 +106,6 @@ export const logout = async (req, res) => {
     const supabase = createClient({ req, res });
     const { error } = await supabase.auth.signOut();
     if (error) {
-      console.log("~ Error While logout:-", error);
       return res
         .status(error.status)
         .json({ status: 2, message: error.message });

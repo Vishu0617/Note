@@ -1,12 +1,12 @@
 import CryptoJS from "crypto-js";
-const secret_key = "ABCDEFGHIJKLMNOPQRSTUVWXYX"
+const secret_key = import.meta.env.VITE_SECRET_KEY
 
-export function Dateformater(date) {
+export function formatDate(date) {
     const formattedDate = new Date(date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
     return formattedDate
 }
 
-export function NameFormate(user) {
+export function formatName(user) {
     if (!user || !user.user_metadata) return "Name not available";
 
     const capitalizeFirstLetter = (string) => {
@@ -20,12 +20,12 @@ export function NameFormate(user) {
     return fullName;
 }
 
-export function CapitalFirstLater(value) {
+export function capitalFirstLater(value) {
     const capitalValue = value.charAt(0).toUpperCase() + value.slice(1)
     return capitalValue
 }
 
-export function DateAndTimeFormat(lastSignInAt) {
+export function formatDateAndTime(lastSignInAt) {
     const dateObj = new Date(lastSignInAt);
     const formattedDate = dateObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
     const formattedTime = dateObj.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });

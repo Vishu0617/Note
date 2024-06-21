@@ -10,21 +10,36 @@ Follow these steps to clone the project and set it up on your local machine:
 
   - After cloning the project, open it in your preferred code editor.
 - `Install Dependencies:`
+
+  - Add script in package.json
+    ```
+     "dev": "nodemon index.js",
+     "start": "node index.js"
+    ```
     
   - Navigate to the `Front` and `Server` directories and install the necessary packages:
 
-    ```
-    cd front
-    npm install
+   - Front:
+      ```
+      cd front
+      npm install
+      ```
 
-    cd server
-    npm install
-    ```
-  - Run the Project:
+   - server :
+      ```
+      cd server
+      npm install
+      ```
+   
+  - Run the front:
+
      ```
       cd front
       npm run dev
+     ```
+   - Run the server:
 
+     ```
       cd server
       npm run dev
       ```
@@ -59,7 +74,7 @@ Follow these steps to clone the project and set it up on your local machine:
 ## Frontend (React.js && Tailwinde CSS) :-
 
 - ``Front`` :
-  Uing ``React`` i have manage ``Dynamic`` and responsive user interface. User can perform a ``Login``, ``Registration``, and ``CRUDE ``opration for notes.
+  Using ``React`` i have manage ``Dynamic`` and responsive user interface. User can perform a ``Login``, ``Registration``, and ``CRUD ``opration for notes.
 
 - ``CSS Framework :-`` I am using ``Tailwind CSS `` for styling my frontend to maik it atractive..
 
@@ -77,9 +92,9 @@ Follow these steps to clone the project and set it up on your local machine:
 
 ## Backend (Node js)
 
-- I am using ``Node js`` for a backend to create ``APIs handling authenticated and CRUD opration for notes``.
+- Using ``Node js`` for a backend to create ``APIs handling authenticated and CRUD opration for notes``.
 
-- I am impliment user registration and login functionality ``API ``.
+- Impliment user registration ,login , notes add, delete,edit view functionality ``API ``.
 
 - Also backend communicate to ``Supabse`` for ``databse opration`` using sdk.
 
@@ -89,9 +104,9 @@ Follow these steps to clone the project and set it up on your local machine:
 
 - Use supabse as the ``databse`` for user user information and notes.
 
-- I have configure the ``nodejs API to communicate with supabse`` sdk.
+- configure the ``nodejs API to communicate with supabse`` sdk.
 
-- I have two table for one is store ``user data `` and second one is store ``notes data``
+-Create two table for one is store ``user data `` and second one is store ``notes data``
 
 - Stores the userId as a ``foreign key``, linking it to the user who created notes.
 
@@ -170,6 +185,8 @@ Follow these steps to clone the project and set it up on your local machine:
       ### User Registration
       - ``Form Field`` : User form field with ``Firstname``, ``Lastname``, ``Email`` and ``Password``.
 
+      - ``Validation with Zod`` : Zod is used for form validation to ensure the correctness and security of the data entered by the user. Zod is a TypeScript-first schema declaration and validation library that ensures the user inputs are valid and meet the specified criteria before processing.
+
       - ``Email Confirmation`` : 
           - After registration, an email is ``sent`` to the user provided ``email address for confirmation``. 
 
@@ -178,6 +195,9 @@ Follow these steps to clone the project and set it up on your local machine:
           - Once confirmed, you are redirected to the Notes website
       ### User Login
        - Enter Email and Password to log in.
+
+       - ``Validation with Zod`` : Zod is used for form validation to ensure the correctness and security of the data entered by the user. Zod is a TypeScript-first schema declaration and validation library that ensures the user inputs are valid and meet the specified criteria before processing.
+       
        - ``Remember Me Option`` :
          - If checked, login details are saved for the next visit, so you don't need to re-enter them.
 
@@ -198,6 +218,7 @@ Follow these steps to clone the project and set it up on your local machine:
       - ``Add Notes Button`` :
          - Allows you to add new notes.
       ### Managing Notes
+      - ``Validation with Zod`` : Zod is used for form validation to ensure the correctness and security of the data entered by the user. Zod is a TypeScript-first schema declaration and validation library that ensures the user inputs are valid and meet the specified criteria before processing.
       - ``Add Notes`` :
         - Notes are displayed in a visually appealing manner after adding.
       - ``Pin/Unpin Notes`` :

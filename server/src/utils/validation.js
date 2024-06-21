@@ -38,15 +38,3 @@ export const noteValidation = z.object({
     .optional(),
 });
 
-
-export const updateValidation = z.object({
-  title: z
-    .string({ required_error: "Please enter note title." })
-    .min(3, { message: "Title length minimum 3 character long." })
-    .max(30, { message: "Title length maximum 30 character long." }),
-  content: z
-    .string({ required_error: "Please enter note content." })
-    .min(3, { message: "Content length minimum 3 character long." })
-    .max(400, { message: "Content length maximum 400 character long." })
-    .optional(),
-});

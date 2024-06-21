@@ -2,13 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import searching from "../assets/searchingfinle.jpg";
 import Notes from "../component/Notes";
-import NotesModel from "../model/NotesModal";
-import NotesViewModel from "../model/NotesViewModal";
+import NoteModel from "../model/NoteModal";
+import NoteViewModel from "../model/NoteViewModal.jsx";
 import axiosUrl from "../utils/axiosUrl";
-import Confirmation from "../utils/functions/Confirmation";
-import { handleInfo, handleOtherError, handleServerNetworkError, handleSuccess } from "../utils/functions/Errors";
-import Loader from "../utils/functions/Loader";
-import SearchBar from "../utils/functions/Searchbar";
+import Confirmation from "../component/Confirmation";
+import SearchBar from "../component/Searchbar"
+import Loader from "../component/Loader" 
+import { handleServerNetworkError, handleUnknownError, showErrorInfo, showSuccessInfo } from "../utils/functions/errors.js";
 
 function Dashboard() {
     const [notes, setNotes] = useState([]);
@@ -47,7 +47,7 @@ function Dashboard() {
         }).catch((error) => {
             setIsLoading(false);
             if (error.response && error.response.data) {
-                handleOtherError(error)
+                handleUnknownError(error)
             } else if (!error.response) {
                 handleServerNetworkError()
             } else console.log("~ Catch Error :-", error);
@@ -114,12 +114,12 @@ function Dashboard() {
         if (deleteNote) {
             await axiosUrl.delete(`/note/${deleteNote.id}`).then((res) => {
                 if (res.data.status === 1) {
-                    handleSuccess(res)
+                    showSuccessInfo(res)
                     onDelteSuccess(deleteNote);
                     setShowConfirmation(false);
                     setDeleteNote(null);
                 } else {
-                    handleInfo(res)
+                    showErrorInfo(res)
                 }
 
             }).catch((error) => {
@@ -128,7 +128,7 @@ function Dashboard() {
                 if (!error.response) {
                     handleServerNetworkError()
                 } else
-                    handleOtherError(error)
+                    handleUnknownError(error)
             });
 
         }
@@ -153,7 +153,7 @@ function Dashboard() {
             if (!error.response) {
                 handleServerNetworkError()
             } else
-                handleOtherError(error)
+                handleUnknownError(error)
         }
     };
 
@@ -191,9 +191,9 @@ function Dashboard() {
                     </div>
                 )}
             </div>
-            <NotesModel isOpen={isModalOpen} onClose={closeModal} onSuccess={onSuccess} />
-            <NotesViewModel edit={edit} confirmDelete={confirmDelete} viewNotes={viewNotes} isViewModel={isViewModel} closeViewModal={closeViewModal} />
-            <NotesModel editNotes={editNotes} isEditModal={isEditModal} onClose={closeEditModal} onSuccess={onSuccess} onEditSuccess={onEditSuccess} />
+            <NoteModel isOpen={isModalOpen} onClose={closeModal} onSuccess={onSuccess} />
+            <NoteViewModel edit={edit} confirmDelete={confirmDelete} viewNotes={viewNotes} isViewModel={isViewModel} closeViewModal={closeViewModal} />
+            <NoteModel editNotes={editNotes} isEditModal={isEditModal} onClose={closeEditModal} onSuccess={onSuccess} onEditSuccess={onEditSuccess} />
             {showConfirmation && (
                 <Confirmation
                     message="Are you sure you want to delete this note?"

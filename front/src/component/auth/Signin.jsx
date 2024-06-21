@@ -5,10 +5,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { signingValidation } from "../../utils/Validation";
 import axiosUrl from "../../utils/axiosUrl";
-import { handleInfo, handleOtherError, handleServerNetworkError, handleSuccess, signInHandleZodError } from "../../utils/functions/Errors";
+import { showErrorInfo, handleUnknownError, handleServerNetworkError, showSuccessInfo, signInHandleZodError } from "../../utils/functions/errors.js";
 import userAuthentication from "../../utils/userAuth";
-import { encryptUserData } from "../../utils/functions/functions";
-const secret_key = "ABCDEFGHIJKLMNOPQRSTUVWXYX"
+import { encryptUserData } from "../../component/functions.jsx";
+const secret_key = import.meta.env.VITE_SECRET_KEY
 
 function Signin() {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ function Signin() {
       setValidationErrors({});
       await axiosUrl.post('/auth/login', formData).then((res) => {
         if (res.data.status === 1) {
-          handleSuccess(res)
+          showSuccessInfo(res)
           setLogin({
             user: res?.data?.result?.user,
             session: res?.data?.result?.session
@@ -76,7 +76,7 @@ function Signin() {
 
           navigate("/dashboard");
         } else {
-          handleInfo(res)
+          showErrorInfo(res)
         }
         setButtonLoader(false);
       })
@@ -89,7 +89,7 @@ function Signin() {
       } else if (!error.response) {
         handleServerNetworkError()
       } else
-        handleOtherError(error)
+        handleUnknownError(error)
     }
   }
 

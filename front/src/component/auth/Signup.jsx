@@ -2,9 +2,9 @@ import { Eye, EyeOff, Lock, Mail, User } from "lucide-react";
 import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { signUpValidation } from "../../utils/Validation";
-import axiosUrl from "../../utils/axiosUrl";
-import { handleInfo, handleOtherError, handleServerNetworkError, handleSuccess, signupHandleZodError } from "../../utils/functions/Errors";
+import { signUpValidation } from "../../utils/Validation.js";
+import axiosUrl from "../../utils/axiosUrl.js";
+import { handleServerNetworkError, handleUnknownError, showErrorInfo, showSuccessInfo, signupHandleZodError } from "../../utils/functions/errors.js";
 
 function Signup() {
   const navigate = useNavigate();
@@ -35,10 +35,10 @@ function Signup() {
       setValidationErrors({});
       await axiosUrl.post('/auth/registration', formData).then((res) => {
         if (res.data.status === 1) {
-          handleSuccess(res)
+          showSuccessInfo(res)
           navigate("/");
         } else {
-          handleInfo(res)
+          showErrorInfo(res)
         }
         setButtonLoader(false);
       })
@@ -48,10 +48,10 @@ function Signup() {
       if (error instanceof z.ZodError) {
         const errors = signupHandleZodError(error, firstNameRef, lastNameRef, emailRef, passwordRef)
         setValidationErrors(errors);
-      }else if (!error.response) {
+      } else if (!error.response) {
         handleServerNetworkError()
-      }  else {
-        handleOtherError(error)
+      } else {
+        handleUnknownError(error)
       }
     }
   }

@@ -1,6 +1,6 @@
 import { X } from "lucide-react";
 import userAuthentication from "../utils/userAuth";
-import { CapitalFirstLater, DateAndTimeFormat } from "../utils/functions/functions";
+import { capitalFirstLater, formatDateAndTime } from "../component/functions"
 
 function ProfileModal({ profileView, closeVieMoal }) {
 
@@ -24,12 +24,12 @@ function ProfileModal({ profileView, closeVieMoal }) {
                 <div className="space-y-4">
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">First Name:</span>
-                        <span className="text-gray-600"><span className="text-gray-600">{CapitalFirstLater(user.user_metadata.first_name)}</span>
+                        <span className="text-gray-600"><span className="text-gray-600">{capitalFirstLater(user.user_metadata.first_name)}</span>
                         </span>
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">Last Name:</span>
-                        <span className="text-gray-600">{CapitalFirstLater(user.user_metadata.last_name)}</span>
+                        <span className="text-gray-600">{capitalFirstLater(user.user_metadata.last_name)}</span>
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">Email:</span>
@@ -37,15 +37,15 @@ function ProfileModal({ profileView, closeVieMoal }) {
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">Joining At:</span>
-                        <span className="text-gray-600">{DateAndTimeFormat(user.created_at)}</span>
+                        <span className="text-gray-600">{formatDateAndTime(user.created_at)}</span>
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">Email Confirm At:</span>
-                        <span className="text-gray-600">{DateAndTimeFormat(user.email_confirmed_at)}</span>
+                        <span className="text-gray-600">{formatDateAndTime(user.email_confirmed_at)}</span>
                     </div>
                     <div className="flex justify-between items-center">
                         <span className="font-medium text-gray-700">Last Sign-in At:</span>
-                        <span className="text-gray-600">{DateAndTimeFormat(user.last_sign_in_at)}</span>
+                        <span className="text-gray-600">{formatDateAndTime(user.last_sign_in_at)}</span>
                     </div>
                 </div>
             </div>

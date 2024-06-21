@@ -1,6 +1,6 @@
 import { Pencil, Trash2, X } from "lucide-react";
 
-function NotesViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeViewModal }) {
+function NoteViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeViewModal }) {
 
     const editView = () => {
         edit(viewNotes),
@@ -29,7 +29,7 @@ function NotesViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeView
                 </button>
                 <div className="mt-4">
                     <h4 className="dark:text-black font-bold mb-3 text-lg sm:text-xl">{viewNotes?.title || "No titles available"}</h4>
-                    <p className="dark:text-black text-sm sm:text-base truncate-name">{viewNotes?.content || "No content available"}</p>
+                    <p className="dark:text-black text-sm sm:text-base truncate-name">{viewNotes?.content }</p>
                 </div>
                 <div className="flex justify-between items-center mt-4">
                     <div>
@@ -59,4 +59,4 @@ function NotesViewModal({ viewNotes, isViewModel, edit, confirmDelete, closeView
     );
 }
 
-export default NotesViewModal;
+export default NoteViewModal;

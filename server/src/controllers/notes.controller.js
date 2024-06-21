@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { ZodErrorHandler } from "../utils/errorHandler.js";
 import { createClient } from "../utils/supabse.js";
-import { noteValidation, updateValidation } from "../utils/validation.js";
+import { noteValidation } from "../utils/validation.js";
 
 export const createNote = async (req, res) => {
   try {
@@ -73,7 +73,7 @@ export const fetchNotes = async (req, res) => {
 export const updateNotes = async (req, res) => {
   try {
     const supabase = createClient({ req, res });
-    const { title, content } = updateValidation.parse(req.body);
+    const { title, content } = noteValidation.parse(req.body);
 
     const { data, error } = await supabase
       .from("notes")

@@ -4,17 +4,16 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import ProfileModel from '../model/ProfileModal';
 import axiosUrl from '../utils/axiosUrl';
-import Confirmation from '../utils/functions/Confirmation';
-import { NameFormate } from '../utils/functions/functions';
+import Confirmation from '../component/Confirmation.jsx'
+import { formatName } from '../component/functions';
 import userAuthentication from '../utils/userAuth';
-import { handleInfo, handleSuccess } from '../utils/functions/Errors';
+import { showErrorInfo, showSuccessInfo } from '../utils/functions/errors.js';
 
 const DashboardHeader = () => {
   const { setLogin } = userAuthentication()
   const [isOpen, setIsOpen] = useState(false);
   const [profileView, setProfileView] = useState(false)
   const [showLogoutConfirmation, setShowLogoutConfirmation] = useState(false);
-  const [isLoading, setIsLoading] = useState(false)
   const dropdownRef = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -41,18 +40,16 @@ const DashboardHeader = () => {
   const confirmLogout = async () => {
     try {
       setShowLogoutConfirmation(false);
-      setIsLoading(true)
       await axiosUrl.post('/auth/logout').then((res) => {
         if (res.data.status === 1) {
-          handleSuccess(res)
-          setIsLoading(false)
+          showSuccessInfo(res)
           setLogin({
             user: null,
             session: null
           })
           navigate('/', { replace: true });
         } else {
-          handleInfo(res)
+          showErrorInfo(res)
         }
       })
     } catch (error) {
@@ -104,7 +101,7 @@ const DashboardHeader = () => {
           onClick={toggleDropdown}
           className="flex items-center focus:outline-none cursor-pointer"
         >
-          {NameFormate(user)}
+          {formatName(user)}
         </div>
         {isOpen && (
           <div
