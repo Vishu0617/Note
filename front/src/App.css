@@ -1,0 +1,61 @@
+/* Add this CSS to your styles */
+
+@keyframes jumping {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-20px);
+  }
+  60% {
+    transform: translateY(-10px);
+  }
+}
+
+.jumping-loader {
+  display: inline-block;
+}
+
+.jumping-loader div {
+  width: 8px;
+  height: 8px;
+  margin: 0 4px;
+  background: #333;
+  border-radius: 50%;
+  display: inline-block;
+  animation: jumping 1.4s infinite ease-in-out;
+}
+
+.jumping-loader div:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.jumping-loader div:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+.jumping-loader div:nth-child(3) {
+  animation-delay: 0s;
+}
+
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.truncate-name {
+ display: -webkit-box;
+ max-width: 100%;
+ text-align: justify;
+ -webkit-line-clamp: 7;
+ -webkit-box-orient: vertical;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ white-space: normal;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
