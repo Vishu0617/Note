@@ -1,4 +1,0 @@
-supabaseUrl 
-supabaseKey 
-secretKey
-webUrl
